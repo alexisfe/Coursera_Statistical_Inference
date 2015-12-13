@@ -1,0 +1,21 @@
+Statistical Inference Week 3
+=============================
+
+```{r echo=FALSE}
+library(knitr)
+opts_chunk$set(cache=T, echo=T, warning=F, message=F)
+```
+
+In a population of interest, a sample of 9 men yielded a sample average brain volume of 1,100cc and a standard deviation of 30cc. What is a 95% Student's T confidence interval for the mean brain volume in this new population?
+
+```{r}
+n<-9
+m<-1100
+s<-30
+
+m + c(-1, 1)*qt(0.975,df=n-1)*s/sqrt(n)
+```
+
+A diet pill is given to 9 subjects over six weeks. The average difference in weight (follow up - baseline) is -2 pounds. What would the standard deviation of the difference in weight have to be for the upper endpoint of the 95% T confidence interval to touch 0?
+
+
