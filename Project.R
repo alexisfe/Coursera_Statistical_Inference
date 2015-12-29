@@ -19,28 +19,41 @@
 # for (i in 1 : 1000) mns = c(mns, mean(runif(40)))
 # hist(mns)
 # This distribution looks far more Gaussian than the original uniform distribution!
-  
-hist(runif(1000))
+
+set.seed(1234)
+lambda = .2
+num_sim = 1e3
+num_var = 40
+
+hist(rexp(num_sim*num_var, lambda))
 mns = NULL
-for (i in 1 : 1000) mns = c(mns, mean(runif(40)))
+for (i in 1 : num_sim) mns = c(mns, mean(rexp(num_var, lambda)))
 hist(mns)
 
-lambda = 2
-n = 1000
-
-hist(rexp(n, lambda))
-mns = NULL
-for (i in 1 : n) mns = c(mns, mean(rexp(n, lambda)))
-hist(mns)
+# 1. Show the sample mean and compare it to the theoretical mean of the distribution.
 
 #Theoretical mean:
-(lambda^-1)/
+tmean <- 1/lambda
 #Sample mean: 
-mean(rexp(n, lambda))
-#Theoretical sd:
-sqrt(lambda^-2)
-#Sample sd:
-sd(rexp(n, lambda))
+smean <- mean(mns)
 
+# 2. Show how variable the sample is (via variance) and compare it to the theoretical variance of the distribution.
 
+#Theoretical var:
+tvar <- 1/(num_var*lambda^2)
+#Sample var:
+svar <- var(mns)
+
+# 3. Show that the distribution is approximately normal.
+library(ggplot2)
+mns <- data.frame(mns)
+
+ggplot(mns, aes(x = mns)) + 
+  geom_histogram(alpha = .10, binwidth=0.1, colour = "black", aes(y = ..density..)) +
+  stat_function(geom = "line", fun = dnorm, arg = list(mean = tmean, sd = sqrt(tvar)),
+                size = 2, colour = "red")
+
+norm_vars <- rnorm(num_var, mean = smean, sd = sqrt(svar))
+
+qqnorm(mns);qqline(norm_vars, col=2)
 
