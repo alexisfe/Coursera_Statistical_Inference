@@ -49,9 +49,9 @@ library(ggplot2)
 mns <- data.frame(mns)
 
 ggplot(mns, aes(x = mns)) + 
-  geom_histogram(alpha = .10, binwidth=0.1, colour = "black", aes(y = ..density..)) +
+  geom_histogram(aes(y = ..density..)) +
   stat_function(geom = "line", fun = dnorm, arg = list(mean = tmean, sd = sqrt(tvar)),
-                size = 2, colour = "red")
+                colour = "red")
 
 norm_vars <- rnorm(num_var, mean = smean, sd = sqrt(svar))
 

@@ -1,20 +1,34 @@
 ---
 title: "Project"
 output: html_document
+author: Alexis Martinez Fernandez
 ---
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r}
-summary(cars)
+```{r echo=FALSE}
+library(knitr)
+opts_chunk$set(cache=T, echo=T, warning=F, message=F)
 ```
 
-You can also embed plots, for example:
 
-```{r, echo=FALSE}
-plot(cars)
+# Overview
+The below sections cover the comparsion versus the theoretical and sample mean and variances from a sample of 40 random exponential variables. There is also a dedicated section analyzing the normality of the distributions of mean exponential random variables.
+
+# Simulations
+Setting seed for reproducibility purposes
+```{r echo=FALSE}
+set.seed(1234)
 ```
+Setting simulation parameters according to given instructions
+```{r echo=FALSE}
+lambda = .2
+num_sim = 1e3
+num_var = 40
+```
+Sample distribution shape of exponential variables
+hist(rexp(num_sim*num_var, lambda))
+Sample distribution shape of exponential variables
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+mns = NULL
+for (i in 1 : num_sim) mns = c(mns, mean(rexp(num_var, lambda)))
+hist(mns)
